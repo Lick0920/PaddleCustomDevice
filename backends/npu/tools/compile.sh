@@ -22,7 +22,7 @@ SOURCE_ROOT="$( cd "$(dirname "${BASH_SOURCE[0]}")/../" && pwd)"
 mkdir -p ${SOURCE_ROOT}/build
 cd ${SOURCE_ROOT}/build
 
-arch=$(uname -i)
+arch=$(uname -i)≠
 if [ $arch == 'x86_64' ]; then
     WITH_MKLDNN=ON
     WITH_ARM=OFF
@@ -38,7 +38,7 @@ Configuring cmake in build ...
     -DWITH_TESTING=${WITH_TESTING:-ON}
     -DWITH_MKLDNN=${WITH_MKLDNN}
     -DWITH_ARM=${WITH_ARM}
-    -DWITH_ATB=${WITH_ATB:-ON}
+    -DWITH_ATB=${WITH_ATB:-OFF}
     -DON_INFER=${ON_INFER:-OFF}
 ========================================
 EOF
@@ -49,7 +49,7 @@ cmake .. \
     -DWITH_TESTING=${WITH_TESTING:-ON} \
     -DWITH_MKLDNN=${WITH_MKLDNN:-ON} \
     -DWITH_ARM=${WITH_ARM:-OFF} \
-    -DWITH_ATB=${WITH_ATB:-ON} \
+    -DWITH_ATB=${WITH_ATB:-OFF} \
     -DON_INFER=${ON_INFER:-OFF} \
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON;cmake_error=$?
 
