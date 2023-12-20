@@ -32,7 +32,6 @@ void AccuracyRawKernel(const Context& dev_ctx,
     return;
   }
 
-
   // cast `indices` or `label` if their type is not consistent
   phi::DenseTensor cast_indices, cast_label;
   phi::DenseTensorMeta meta = {phi::DataType::INT32, {}};
