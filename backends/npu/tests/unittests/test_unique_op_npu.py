@@ -40,6 +40,7 @@ class TestUniqueOp(OpTest):
 
     def set_npu(self):
         self.__class__.use_custom_device = True
+        self.place = paddle.CustomPlace("npu", 0)
 
     def set_input_data(self):
         arr = np.array([1,1,2,3,1,4,5,6,6])
@@ -50,7 +51,7 @@ class TestUniqueOp(OpTest):
 
     def test_check_output(self):
         self.check_output_with_place(self.place)
-        self.place = paddle.CustomPlace("npu", 0)
+        
 
     def set_attrs(self):
         pass
