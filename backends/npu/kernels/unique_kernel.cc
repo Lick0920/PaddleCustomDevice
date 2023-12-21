@@ -17,32 +17,6 @@
 
 namespace custom_kernel {
 
-template <typename T, typename Context>
-void UniqueKernel(const Context& dev_ctx,
-                  const phi::DenseTensor& x,
-                  bool return_index,
-                  bool return_inverse,
-                  bool return_counts,
-                  const std::vector<int>& axis,
-                  phi::DataType dtype,
-                  phi::DenseTensor* out,
-                  phi::DenseTensor* indices,
-                  phi::DenseTensor* index,
-                  phi::DenseTensor* counts) {
-  bool is_sorted = true;
-  UniqueRawKernel<T, Context>(dev_ctx,
-                              x,
-                              return_index,
-                              return_inverse,
-                              return_counts,
-                              axis,
-                              dtype,
-                              is_sorted,
-                              out,
-                              indices,
-                              index,
-                              counts);
-}
 
 template <typename T, typename Context>
 void UniqueRawKernel(const Context& dev_ctx,
@@ -89,9 +63,38 @@ void UniqueRawKernel(const Context& dev_ctx,
   } else {
     auto npu_stream = dev_ctx.stream();
     printf("axis: %d\n", axis[0]);
+}                    
 }
-                    
+
+template <typename T, typename Context>
+void UniqueKernel(const Context& dev_ctx,
+                  const phi::DenseTensor& x,
+                  bool return_index,
+                  bool return_inverse,
+                  bool return_counts,
+                  const std::vector<int>& axis,
+                  phi::DataType dtype,
+                  phi::DenseTensor* out,
+                  phi::DenseTensor* indices,
+                  phi::DenseTensor* index,
+                  phi::DenseTensor* counts) {
+  bool is_sorted = true;
+  custom_kernel::UniqueRawKernel<T, Context>(dev_ctx,
+                              x,
+                              return_index,
+                              return_inverse,
+                              return_counts,
+                              axis,
+                              dtype,
+                              is_sorted,
+                              out,
+                              indices,
+                              index,
+                              counts);
+}
+
 } // namespace custom_kernel
+
 
 PD_REGISTER_PLUGIN_KERNEL(unique,
                    npu,
