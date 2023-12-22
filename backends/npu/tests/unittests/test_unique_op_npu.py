@@ -27,12 +27,15 @@ class TestUniqueOp(OpTest):
     def setUp(self):
         self.set_npu()
         self.set_dtype()
-        self.set_input_data()
+        self.set_data()
         self.set_attrs()
         self.op_type = "unique"
         self.inputs = {"X": self.input_data}
         self.outputs = {
-            "Out": self.out_data
+            "Out": self.out_data,
+            "Index": self.index_data,
+            "Inverse" : self.inverse_data,
+            "Counts": self.count_data
         }
 
     def set_dtype(self):
@@ -42,12 +45,18 @@ class TestUniqueOp(OpTest):
         self.__class__.use_custom_device = True
         self.place = paddle.CustomPlace("npu", 0)
 
-    def set_input_data(self):
+    def set_data(self):
         arr = np.array([1,1,2,3,1,4,5,6,6])
         arr_o = np.array([1,2,3,4,5,6])
         dtype = np.int32  # 默认数据类型为int32
         self.input_data = arr.astype(dtype)
         self.out_data = arr_o.astype(dtype)
+        self.index_data = np.array([0,2,3,5,6,7]).astype(
+            np.int32)  # 默认数据类型为int32
+        self.inverse_data = np.array([0,0,1,2,0,3,4,5,5]).astype(
+            np.int32)  # 默认数据类型为int32
+        self.count_data = np.array([3,1,1,1,1,2]).astype(
+            np.int32)  # 默认数据类型为int32
 
     def test_check_output(self):
         self.check_output_with_place(self.place)
