@@ -32,7 +32,7 @@ void TruncKernel(const Context& dev_ctx,
 } // namespace custom_kernel
 
 
-PD_REGISTER_KERNEL(trunc,
+PD_REGISTER_PLUGIN_KERNEL(trunc,
                    npu,
                    ALL_LAYOUT,
                    custom_kernel::TruncKernel,
