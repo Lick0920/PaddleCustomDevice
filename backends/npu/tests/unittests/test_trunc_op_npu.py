@@ -46,7 +46,7 @@ class TestTruncOp(OpTest):
         self.check_output_with_place(self.place)
 
     def test_check_grad(self):
-        self.check_grad_with_place(self.place, ["Input"], "Out")
+        self.check_grad_with_place(self.place, ["X"], "Out")
 
 class TestFloatTruncOp(TestTruncOp):
     def init_dtype_type(self):
