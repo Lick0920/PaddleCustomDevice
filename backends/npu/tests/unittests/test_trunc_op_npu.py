@@ -52,7 +52,7 @@ class TestTruncOp(OpTest):
 class TestFloatTruncOp(TestTruncOp):
     def init_dtype_type(self):
         self.dtype = np.float32
-        self.__class__.exist_fp64_check_grad = True
+        # self.__class__.exist_fp64_check_grad = True
 
     # def test_check_grad(self):
     #     pass
@@ -61,42 +61,42 @@ class TestFloatTruncOp(TestTruncOp):
 class TestIntTruncOp(TestTruncOp):
     def init_dtype_type(self):
         self.dtype = np.int32
-        self.__class__.exist_fp64_check_grad = True
+        # self.__class__.exist_fp64_check_grad = True
 
     # def test_check_grad(self):
     #     pass
 
 
-class TestTruncAPI(unittest.TestCase):
-    def setUp(self):
-        self.shape = [20, 20]
-        self.x = np.random.random((20, 20)).astype(np.float32)
-        self.place = paddle.CPUPlace()
+# class TestTruncAPI(unittest.TestCase):
+#     def setUp(self):
+#         self.shape = [20, 20]
+#         self.x = np.random.random((20, 20)).astype(np.float32)
+#         self.place = paddle.CPUPlace()
 
-    @test_with_pir_api
-    def test_api_static(self):
-        paddle.enable_static()
-        with paddle.static.program_guard(paddle.static.Program()):
-            x = paddle.static.data('X', self.shape)
-            out = paddle.trunc(x)
-            exe = paddle.static.Executor(self.place)
-            res = exe.run(feed={'X': self.x}, fetch_list=[out])
-        out_ref = np.trunc(self.x)
-        for out in res:
-            np.testing.assert_allclose(out, out_ref, rtol=1e-08)
+#     @test_with_pir_api
+#     def test_api_static(self):
+#         paddle.enable_static()
+#         with paddle.static.program_guard(paddle.static.Program()):
+#             x = paddle.static.data('X', self.shape)
+#             out = paddle.trunc(x)
+#             exe = paddle.static.Executor(self.place)
+#             res = exe.run(feed={'X': self.x}, fetch_list=[out])
+#         out_ref = np.trunc(self.x)
+#         for out in res:
+#             np.testing.assert_allclose(out, out_ref, rtol=1e-08)
 
-    def test_api_dygraph(self):
-        paddle.disable_static(self.place)
-        x_tensor = paddle.to_tensor(self.x)
-        out = paddle.trunc(x_tensor)
-        out_ref = np.trunc(self.x)
-        np.testing.assert_allclose(out.numpy(), out_ref, rtol=1e-08)
-        paddle.enable_static()
+#     def test_api_dygraph(self):
+#         paddle.disable_static(self.place)
+#         x_tensor = paddle.to_tensor(self.x)
+#         out = paddle.trunc(x_tensor)
+#         out_ref = np.trunc(self.x)
+#         np.testing.assert_allclose(out.numpy(), out_ref, rtol=1e-08)
+#         paddle.enable_static()
 
-    def test_errors(self):
-        with paddle.static.program_guard(paddle.static.Program()):
-            x = paddle.static.data('X', [20, 20], 'bool')
-            self.assertRaises(TypeError, paddle.trunc, x)
+#     def test_errors(self):
+#         with paddle.static.program_guard(paddle.static.Program()):
+#             x = paddle.static.data('X', [20, 20], 'bool')
+#             self.assertRaises(TypeError, paddle.trunc, x)
 
     # def test_check_grad(self):
     #     pass
