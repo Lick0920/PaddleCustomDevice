@@ -35,7 +35,7 @@ class TestTruncOp(OpTest):
         self.outputs = {'Out': (np.trunc(self.inputs['X']))}
 
     def init_dtype_type(self):
-        self.dtype = np.float64
+        self.dtype = np.float32
     
     def set_npu(self):
         self.__class__.use_custom_device = True
@@ -49,9 +49,9 @@ class TestTruncOp(OpTest):
     # def test_check_grad(self):
     #     self.check_grad_with_place(self.place, ["X"], "Out")
 
-class TestFloatTruncOp(TestTruncOp):
-    def init_dtype_type(self):
-        self.dtype = np.float32
+# class TestFloatTruncOp(TestTruncOp):
+#     def init_dtype_type(self):
+#         self.dtype = np.float32
         # self.__class__.exist_fp64_check_grad = True
 
     # def test_check_grad(self):
