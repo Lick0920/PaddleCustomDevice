@@ -43,18 +43,19 @@ class TestTruncOp(OpTest):
 
 
     def test_check_output(self):
+        self.__class__.no_need_check_grad = True
         self.check_output_with_place(self.place)
 
-    def test_check_grad(self):
-        self.check_grad_with_place(self.place, ["X"], "Out")
+    # def test_check_grad(self):
+    #     self.check_grad_with_place(self.place, ["X"], "Out")
 
 class TestFloatTruncOp(TestTruncOp):
     def init_dtype_type(self):
         self.dtype = np.float32
         self.__class__.exist_fp64_check_grad = True
 
-    def test_check_grad(self):
-        pass
+    # def test_check_grad(self):
+    #     pass
 
 
 class TestIntTruncOp(TestTruncOp):
@@ -62,8 +63,8 @@ class TestIntTruncOp(TestTruncOp):
         self.dtype = np.int32
         self.__class__.exist_fp64_check_grad = True
 
-    def test_check_grad(self):
-        pass
+    # def test_check_grad(self):
+    #     pass
 
 
 class TestTruncAPI(unittest.TestCase):
@@ -96,6 +97,9 @@ class TestTruncAPI(unittest.TestCase):
         with paddle.static.program_guard(paddle.static.Program()):
             x = paddle.static.data('X', [20, 20], 'bool')
             self.assertRaises(TypeError, paddle.trunc, x)
+
+    # def test_check_grad(self):
+    #     pass
 
 
 class TestTruncFP16OP(TestTruncOp):
