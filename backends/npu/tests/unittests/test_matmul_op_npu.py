@@ -85,7 +85,7 @@ class TestMatmulNPUOp(OpTest):
         self.set_npu()
         self.init_kernel_type()
         self.config()
-        self.op_type = "custom_matmul"
+        self.op_type = "matmul"
         x = np.random.random(self.x_shape).astype(self.dtype)
         y = np.random.random(self.y_shape).astype(self.dtype)
         # -0.1 ~ 0.1
