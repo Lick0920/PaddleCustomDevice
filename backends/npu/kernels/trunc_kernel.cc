@@ -29,6 +29,7 @@ void TruncKernel(const Context& dev_ctx,
     .AddOutput(*out)
     .Run(npu_stream);
     }
+}  // namespace custom_kernel
 
 PD_REGISTER_PLUGIN_KERNEL(trunc,
                    npu,
